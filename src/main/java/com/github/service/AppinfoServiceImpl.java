@@ -16,15 +16,15 @@ public class AppinfoServiceImpl implements AppinfoService {
     private AppInfoMapper appInfoMapper;
     @Override
     public PageBean<AppInfo> findAppList(QueryAppInfoVO queryAppInfoVO) {
-        //创建PageBean对象
+        //1.创建PageBean对象
         PageBean<AppInfo> pageBean = new PageBean<AppInfo>();
         pageBean.setCurrentPage(queryAppInfoVO.getPageIndex());
         pageBean.setPageSize(queryAppInfoVO.getPageSize());
         queryAppInfoVO.setStartIndex(pageBean.getStartIndex());
-        //查询总记录数
+        //2.查询总记录数
         int count = appInfoMapper.getTotalCount(queryAppInfoVO);
         pageBean.setTotalCount(count);
-        //查询结果集
+        //3.查询结果集
         List<AppInfo> appInfoList = appInfoMapper.findAppInfo(queryAppInfoVO);
         pageBean.setResult(appInfoList);
         return pageBean;
@@ -33,5 +33,27 @@ public class AppinfoServiceImpl implements AppinfoService {
     @Override
     public List<DataDictionary> findDictionaryList(String param) {
         return appInfoMapper.findDictionaryList(param);
+    }
+
+    @Override
+    public boolean appInfoAdd(AppInfo appInfo) {
+        if (appInfoMapper.appInfoAdd(appInfo) > 0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean apkNameExist(String apkName) {
+        AppInfo appInfo = appInfoMapper.apkNameExist(apkName);
+        if (appInfo != null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public AppInfo findAppInfoById(int id) {
+        return appInfoMapper.findAppInfoById(id);
     }
 }

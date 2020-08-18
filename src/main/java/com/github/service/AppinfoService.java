@@ -11,4 +11,10 @@ public interface AppinfoService {
     PageBean<AppInfo> findAppList(QueryAppInfoVO queryAppInfoVO);
 
     List<DataDictionary> findDictionaryList(String param);
+
+    boolean appInfoAdd(AppInfo appInfo);
+
+    boolean apkNameExist(String apkName);
+
+    AppInfo findAppInfoById(int id);
 }
